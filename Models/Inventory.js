@@ -2,13 +2,16 @@ const mongoose=require('mongoose')
 
 const inventorySchema=new mongoose.Schema({
     name:{
-        type:String
+        type:String,
+        required:true
     },
     photoURL:{
-        type:String
+        type:String,
+    
     },
     cost:{
-        type: Number
+        type: Number,
+        required:true
     }
 })
 

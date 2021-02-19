@@ -1,5 +1,6 @@
 const mongoose=require('mongoose')
 const { v4: uuidv4 } = require('uuid');
+
 const userSchema=new mongoose.Schema({
     username:{
         type: String,
@@ -14,9 +15,10 @@ const userSchema=new mongoose.Schema({
         default:false,
         unique:false
     },
-    sessionID:{
+    SID:{
         type:String,
-        unique:true
+        unique:true,
+        default:"100"
     },
     shoppingCart:{
         type:[String],
@@ -24,7 +26,7 @@ const userSchema=new mongoose.Schema({
         unique:false
     },
     selling:{
-        type:[String],
+        type:[{}],
         default:[],
         unique:false
     }

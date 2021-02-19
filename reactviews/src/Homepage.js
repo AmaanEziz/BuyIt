@@ -6,6 +6,7 @@ export default function Homepage() {
     const [search,setSearch]=useState("");
     const [loaded,setLoaded]=useState(false);
     const [SID,setSID]=useState();
+    const UNKNOWN_IMAGE="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdRy7QL9AkV9RHklQFF3kzv3XabkMNbeamnQ&usqp=CAU"
     const history=useHistory();
     useEffect(async ()=>{
         if (sessionStorage.getItem("SID")){
@@ -40,7 +41,8 @@ export default function Homepage() {
         <div>
         <button onClick={logOutClick} className="btn btn-danger">LogOut</button>
           <h1 className="float-left">BuyIt</h1>
-          <a href="/listSelling" className="btn btn-info float-right">List Selling</a>
+          <a href="/newListing" className="btn btn-primary float-right">New Listing</a>
+
             <form>
                 <input type="text" placeholder="Search" id="search" name="search" value={search} onChange={onChange}></input>
                 <button onClick={submitSearch}>Submit</button>
@@ -49,7 +51,7 @@ export default function Homepage() {
             {loaded==true ? <></> : <div>Loading ... </div>}
             {inventory.map(item=>{
                return <Card style={{ width: '18rem', display:"inline-block"}} className="m-2">
-               <Card.Img variant="top" src={item.photoURL}  />
+               <Card.Img variant="top" src={item.photoURL} onError={(e)=>{e.target.src=UNKNOWN_IMAGE}} />
                <Card.Body>
                  <Card.Title>{item.name}</Card.Title>
                  <Card.Text>

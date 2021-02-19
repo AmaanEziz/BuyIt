@@ -45,9 +45,9 @@ app.post('/login',(req,res)=>{
             res.sendStatus(400).send({status:"Username and Password are incorrect"})
         }
         else {
-        let user= await Users.findOneAndUpdate({username:req.body.username},{sessionID:uuidv4()},{new:true})
+        let user= await Users.findOneAndUpdate({username:req.body.username},{SID:uuidv4()},{new:true})
         .catch(err=>{console.log(err)})
-        res.status(200).json({SID:user.sessionID})
+        res.status(200).json({SID:user.SID})
 
     }
 
@@ -67,7 +67,34 @@ app.get('/results/:search',(req,res)=>{
         res.send(result)
     })
 })
-async function addNewInventory(){
-let car= new Inventory({name:"banana",cost:1,photoURL:"NA"})
-await car.save()
-Inventory.find({}).then(result=>{console.log(result)}) }
+
+app.post('/newListing',async (req,res)=>{
+    let newInventory= new Inventory({
+        name:req.body.name,
+        cost:req.body.cost,
+        photoURL:req.body.photoURL
+    })
+  await newInventory.save().then(async (item)=>{
+     // console.log(item)
+     console.log(req.body.SID)
+      await Users.findOne({SID:req.body.SID},(err,result)=>{
+          if (err){console.log(err)}
+          console.log(result)
+      })
+       await Users.findOneAndUpdate({SID:req.body.SID},
+       {$push:{selling:item}},{new:true}).then(result=>{console.log(result)})
+        .catch(err=>{console.log(err)})
+        res.status(200).send({ status: 'OK'});
+
+
+
+    }).catch(error=>{
+        res.status(400).send({status:"All fields not filled in"})
+    })
+    
+})
+
+async function deleteAll(){
+await Users.deleteMany({})
+await Inventory.deleteMany({})
+}
