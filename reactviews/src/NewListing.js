@@ -17,6 +17,7 @@ export default function NewListing() {
             cost: costRef.current.value,
             SID:sessionStorage.getItem("SID"),
             photoURL:photoURLRef.current.value
+            
         }
         console.log(photoURLRef.current.value)
 
