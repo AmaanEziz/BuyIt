@@ -68,31 +68,35 @@ app.get('/results/:search',(req,res)=>{
     })
 })
 
+
 app.post('/newListing',async (req,res)=>{
     let newInventory= new Inventory({
         name:req.body.name,
         cost:req.body.cost,
-        photoURL:req.body.photoURL
+        photoURL:req.body.photoURL,
+        sellers:new Map()
     })
+    await Users.findOne({SID:req.body.SID},(err,user)=>{
+        newInventory.sellers.set(user.username,1)
+    })
+    
   await newInventory.save().then(async (item)=>{
-     // console.log(item)
-     console.log(req.body.SID)
-      await Users.findOne({SID:req.body.SID},(err,result)=>{
-          if (err){console.log(err)}
-          console.log(result)
-      })
        await Users.findOneAndUpdate({SID:req.body.SID},
-       {$push:{selling:item}},{new:true}).then(result=>{console.log(result)})
+       {$push:{selling:item}},{new:true})
         .catch(err=>{console.log(err)})
         res.status(200).send({ status: 'OK'});
-
-
 
     }).catch(error=>{
         res.status(400).send({status:"All fields not filled in"})
     })
     
 })
+
+app.get("/item/:id",(async (req,res)=>{
+let item=await Inventory.findById(req.params.id)
+console.log(item)
+res.send(item)
+}))
 
 async function deleteAll(){
 await Users.deleteMany({})

@@ -5,6 +5,7 @@ import Registration from './Registration.js';
 import Login from './Login.js'
 import Homepage from './Homepage.js'
 import NewListing from './NewListing.js'
+import Item from './Item.js'
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
     <Route path="/login"  component={withRouter(Login)}/>
     <Route path="/homepage"  component={withRouter(Homepage)}/>
     <Route path="/newListing"  component={withRouter(NewListing)}/>
+    <Route path="/item/:id" component={Item}/>
     <Route path="*" component={()=>{return <div></div>}} status={404}/>
     </Switch>
     </Router>

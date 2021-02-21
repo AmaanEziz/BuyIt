@@ -12,6 +12,10 @@ const inventorySchema=new mongoose.Schema({
     cost:{
         type: Number,
         required:true
+    },
+    sellers:{
+        type:Map,
+        of: Number
     }
 })
 

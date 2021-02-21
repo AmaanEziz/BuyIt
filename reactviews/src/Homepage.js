@@ -1,6 +1,7 @@
 import {React,useState,useEffect} from 'react'
 import {Card,Button} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
+import './CSS/homepageCSS.css'
 export default function Homepage() {
     const [inventory,setInventory]=useState([])
     const [search,setSearch]=useState("");
@@ -51,7 +52,11 @@ export default function Homepage() {
             {loaded==true ? <></> : <div>Loading ... </div>}
             {inventory.map(item=>{
                return <Card style={{ width: '18rem', display:"inline-block"}} className="m-2">
-               <Card.Img variant="top" src={item.photoURL} onError={(e)=>{e.target.src=UNKNOWN_IMAGE}} />
+                <a href={"/item/"+item._id}      >
+               <Card.Img variant="top" className="img" 
+               src={item.photoURL} 
+               onError={(e)=>{e.target.src=UNKNOWN_IMAGE}} />
+               </a>
                <Card.Body>
                  <Card.Title>{item.name}</Card.Title>
                  <Card.Text>
