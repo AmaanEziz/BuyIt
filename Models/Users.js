@@ -18,7 +18,7 @@ const userSchema=new mongoose.Schema({
     SID:{
         type:String,
         unique:true,
-        default:"100"
+        default:uuidv4()
     },
     shoppingCart:{
         type:[String],

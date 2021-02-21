@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import {Link, BrowserRouter as Router} from 'react-router-dom'
 export default function Login() {
     
+    const [loading,setLoading]=useState();
     const usernameRef=useRef();
     const passwordRef=useRef()
     const [errorMessage,setErrorMessage]=useState("")
@@ -19,14 +20,16 @@ export default function Login() {
             },
             body: JSON.stringify(data)
           }).catch(err=>{setErrorMessage("Username and Password required")
-        console.log(err)})
-         let responseJSON=await response.json().catch(err=>{console.log(".json() error")})
-         sessionStorage.setItem("SID",responseJSON.SID)
-         console.log(sessionStorage.getItem("SID"))
+        })
         if (response.status==200){
+            setLoading("Loading homepage...")
+            let responseJSON=await response.json()
+            sessionStorage.setItem("SID",responseJSON.SID)
             history.push('/homepage')
+             
+              
         }
-        else {
+        else{
             setErrorMessage("Username and password are incorrect")
         }
     }
@@ -44,6 +47,7 @@ export default function Login() {
                 <button type="submit">Submit</button>
                 <Link to="/registration"><button>Register</button></Link>
         </form>
+        <div>{loading}</div>
         </>
     )
 }

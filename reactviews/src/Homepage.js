@@ -1,23 +1,20 @@
 import {React,useState,useEffect} from 'react'
 import {Card,Button} from 'react-bootstrap'
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect} from "react-router-dom";
+
 import './CSS/homepageCSS.css'
 export default function Homepage() {
     const [inventory,setInventory]=useState([])
     const [search,setSearch]=useState("");
     const [loaded,setLoaded]=useState(false);
-    const [SID,setSID]=useState();
     const UNKNOWN_IMAGE="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdRy7QL9AkV9RHklQFF3kzv3XabkMNbeamnQ&usqp=CAU"
     const history=useHistory();
     useEffect(async ()=>{
-        if (sessionStorage.getItem("SID")){
-        setSID(sessionStorage.getItem("SID"))
+        
         let response=await fetch('http://localhost:3001/homepage')
         setInventory(await response.json())
-        setLoaded(true)}
-        else {
-            history.push('/login')
-        }
+        setLoaded(true)
+        
     },[])
     
     function onChange(e){
@@ -26,7 +23,6 @@ export default function Homepage() {
     }
     function logOutClick(){
         sessionStorage.removeItem("SID")
-        setSID(null)
         history.push('/login')
     }
    async function submitSearch(e){
@@ -37,9 +33,11 @@ export default function Homepage() {
         setInventory(newInventory)
         setLoaded(true)
     }
+   
     return (
        
         <div>
+             {sessionStorage.getItem("SID") ? <></> : <Redirect to="login"/>}   
         <button onClick={logOutClick} className="btn btn-danger">LogOut</button>
           <h1 className="float-left">BuyIt</h1>
           <a href="/newListing" className="btn btn-primary float-right">New Listing</a>

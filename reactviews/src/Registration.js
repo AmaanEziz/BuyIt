@@ -10,22 +10,28 @@ export default function Registration() {
     let history = useHistory();
    async function handleSubmit(event){
         event.preventDefault();
-        let data={username:usernameRef.current.value,password:passwordRef.current.value}
-       let response= await fetch('http://localhost:3001/registration', {
+        console.log("button hit")
+        let data={
+            username:usernameRef.current.value,
+            password:passwordRef.current.value}
+        console.log(data);
+       await fetch('http://localhost:3001/registration', {
             method: 'POST', 
             headers: {
                               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
+          }).then(response=>{
+            if (response.status==200){
+                console.log("success occured")
+               history.push('/login')
+               
+            }
+            else {
+                console.log("failure occured")
+                setErrorMessage("Username already taken")
+            }
           })
-          console.log(response.status)
-       if (response.status==200){
-       history.push('/login')
-       
-    }
-    else {
-        setErrorMessage("Username already taken")
-    }
     }
 
     return (
