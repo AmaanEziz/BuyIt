@@ -13,25 +13,28 @@ export default function Login() {
    async function handleSubmit(event){
         event.preventDefault();
         let data={username:usernameRef.current.value,password:passwordRef.current.value}
-       let response= await fetch('http://localhost:3001/login', {
+      await fetch('http://localhost:3001/login', {
             method: 'POST', 
             headers: {
                               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-          }).catch(err=>{setErrorMessage("Username and Password required")
+          }).then(async (response)=>{
+            if (response.status==200){
+                setLoading("Loading homepage...")
+                let responseJSON=await response.json()
+                sessionStorage.setItem("SID",responseJSON.SID)
+                history.push('/homepage')
+                 
+                  
+            }
+            else{
+                setErrorMessage("Username and password are incorrect")
+            }
+          })
+          .catch(err=>{setErrorMessage("Username and Password required")
         })
-        if (response.status==200){
-            setLoading("Loading homepage...")
-            let responseJSON=await response.json()
-            sessionStorage.setItem("SID",responseJSON.SID)
-            history.push('/homepage')
-             
-              
-        }
-        else{
-            setErrorMessage("Username and password are incorrect")
-        }
+        
     }
 
     return (

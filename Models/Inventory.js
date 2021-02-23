@@ -13,9 +13,12 @@ const inventorySchema=new mongoose.Schema({
         type: Number,
         required:true
     },
-    sellers:{
-        type:Map,
-        of: Number
+    seller:{
+        type:String,
+        unique:false
+    },
+    description:{
+        type:String
     }
 })
 

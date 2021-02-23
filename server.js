@@ -26,10 +26,9 @@ let newUser=new Users({
     password: await bcrypt.hash(req.body.password,10),
 })
 await newUser.save().then(()=>{
-    res.sendStatus(200)
-    console.log("success saving")
+  return  res.sendStatus(200)
 }).catch(error=>{
-    res.sendStatus(400)
+   return res.sendStatus(400)
 
 })
 
@@ -42,58 +41,83 @@ app.post('/login',(req,res)=>{
         if (result){
         let validPassword= await bcrypt.compare(req.body.password,result.password)
         let user= await Users.findOneAndUpdate({username:req.body.username},{SID:uuidv4()},{new:true})
-        .catch(err=>{console.log(err)})
-        res.status(200).json({SID:user.SID})
+        .catch(err=>{return res.sendStatus(400)})
+        return res.status(200).json({SID:user.SID})
     }
     else {
-        res.sendStatus(400)
+        return res.sendStatus(400)
     }
     })
-.catch(err=>{res.sendStatus(400)})
+.catch(err=>{return res.sendStatus(400)})
 })
 
-app.get('/homepage',(req,res)=>{
-    Inventory.find({},(err,result)=>{
-        if (err) console.log(err)
-        res.json(result)
-    })
+
+app.post('/homepage',async (req,res)=>{
+    let inventory=await Inventory.find({})
+    let user= await Users.findOne({SID:req.body.SID})
+    let response={inventory:inventory,user:user}
+    res.json(response)
+    return 
+
+})
+
+app.post('/addToCart',async (req,res)=>{
+    await Users.findOneAndUpdate({SID:req.body.SID},
+        {$push:{shoppingCart:req.body.item}})
+        .then(()=>{
+            return res.sendStatus(200)
+        })
+        .catch(()=>{
+            return res.sendStatus(400)
+        })
 
 })
 app.get('/results/:search',(req,res)=>{
     Inventory.find({name: {$regex: req.params.search, $options: 'i'}}).limit(5).then((err,result)=>{
-        if (err) res.send(err)
-        res.json(result)
+        if (err) return res.send(err)
+        return res.json(result)
     })
 })
 
 
 app.post('/newListing',async (req,res)=>{
+    let user= await Users.findOne({SID:req.body.SID})
+    console.log(user.username)
     let newInventory= new Inventory({
         name:req.body.name,
         cost:req.body.cost,
         photoURL:req.body.photoURL,
-        sellers:new Map()
+        seller: user.username,
+        description:req.body.summary
     })
-    await Users.findOne({SID:req.body.SID},(err,user)=>{
-        newInventory.sellers.set(user.username,1)
-    })
-    
+
   await newInventory.save().then(async (item)=>{
        await Users.findOneAndUpdate({SID:req.body.SID},
        {$push:{selling:item}},{new:true})
-        .catch(err=>{console.log(err)})
-        res.sendStatus(200)
+        .catch(err=>{ return res.sendStatus(400)
+        })
+        return res.sendStatus(200)
     }).catch(error=>{
-        res.sendStatus(400)
+        return res.sendStatus(400)
     })
     
 })
 
 app.get("/item/:id",(async (req,res)=>{
-let item=await Inventory.findById(req.params.id)
-console.log(item)
-res.send(item)
+let item=await Inventory.findById(req.params.id).catch(err=>{return res.sendStatus(400)})
+return res.sendStatus(200).json()
 }))
+
+app.post('/shoppingCart',async (req,res)=>{
+  await Users.findOne({SID:req.body.SID}).then(user=>{
+    res.json(user.shoppingCart)
+    console.log(user.shoppingCart)
+    return
+
+  })
+    
+})
+
 
 async function deleteAll(){
 await Users.deleteMany({})

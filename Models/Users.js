@@ -21,7 +21,7 @@ const userSchema=new mongoose.Schema({
         default:uuidv4()
     },
     shoppingCart:{
-        type:[String],
+        type:[{}],
         default:[],
         unique:false
     },

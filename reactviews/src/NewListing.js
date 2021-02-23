@@ -7,7 +7,7 @@ export default function NewListing() {
     const costRef=useRef()
     const photoURLRef=useRef()
     const history=useHistory()
-
+    const [Description,setDescription]=useState("")
 
 
     async function onSubmit(e){
@@ -16,7 +16,8 @@ export default function NewListing() {
             name: nameRef.current.value,
             cost: costRef.current.value,
             SID:sessionStorage.getItem("SID"),
-            photoURL:photoURLRef.current.value
+            photoURL:photoURLRef.current.value,
+            summary:Description
             
         }
         console.log(photoURLRef.current.value)
@@ -33,6 +34,7 @@ export default function NewListing() {
               console.log(response)
             if (response.status==200){
                 history.push('/homepage')
+            
             }
             else{ setErrorMessage("Please fill in Name and Cost fields")
              console.log("error occured") }
@@ -54,8 +56,14 @@ export default function NewListing() {
                 <input type="text" ref={costRef}/><br/>
                 <label for="photoURL">photoURL</label><br/>
                 <input type="text" ref={photoURLRef}/><br/>
+                <label for="description">Description</label>
+                <textarea onChange={(e)=>{
+                    setDescription(e.target.value)
+                }}>{Description}</textarea>
                 <button onClick={onSubmit}>Submit</button>
             </form>
         </div>
     )
     }
+    //on homepage request. send the information of the user as well and, if the user's shopping cart includes an item,
+//make that item have the button "Added to cart checkmark" instead of "Add to cart"

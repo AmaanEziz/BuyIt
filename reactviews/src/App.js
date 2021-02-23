@@ -6,7 +6,7 @@ import Login from './Login.js'
 import Homepage from './Homepage.js'
 import NewListing from './NewListing.js'
 import Item from './Item.js'
-
+import ShoppingCart from './ShoppingCart.js'
 function App() {
   return (
     
@@ -18,6 +18,7 @@ function App() {
     <Route path="/homepage" component={withRouter(Homepage)}/>
     <Route path="/newListing"  component={withRouter(NewListing)}/>
     <Route path="/item/:id" component={Item}/>
+    <Route path="/shoppingCart" component={ShoppingCart}/>
     <Route exact path="/" > 
     
     {sessionStorage.getItem("SID") ? <Redirect to="/homepage"/> : <Redirect to="/login"/>}
