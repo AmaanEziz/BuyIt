@@ -119,7 +119,44 @@ app.post('/shoppingCart',async (req,res)=>{
 })
 
 
+app.post('/deleteFromCart',(req,res)=>{
+    Users.findOneAndUpdate({SID:req.body.SID},
+        {$pull:{shoppingCart:req.body.item}},{new:true}).then(changedUser=>{    
+            console.log(changedUser)
+            res.sendStatus(200)
+            return
+
+        }).catch(err=>{
+            res.sendStatus(400)
+            return
+        })
+})
+
+app.post('/buyNow',(req,res)=>{
+Inventory.findByIdAndRemove(req.body.item._id,(err,result)=>{
+    if(err){
+        res.sendStatus(400)
+        return
+    }
+}).catch(err=>{
+    res.sendStatus(400)
+    return
+})
+
+Users.findOneAndUpdate({SID:req.body.SID},
+    {$pull:{shoppingCart:req.body.item}})
+    .then(result=>{
+        res.sendStatus(200)
+    })
+    .catch(err=>{
+        res.sendStatus(400)
+        return
+    })
+
+})
+
 async function deleteAll(){
 await Users.deleteMany({})
 await Inventory.deleteMany({})
 }
+

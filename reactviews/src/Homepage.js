@@ -61,7 +61,7 @@ export default function Homepage() {
             },
             body: JSON.stringify(data)
           }).catch(err=>{console.log("error occured adding to cart")})
-        e.target.style="btn btn-success"
+        e.target.className="btn btn-success"
         e.target.innerHTML="Added to Cart"
         e.target.disabled=true
         }
