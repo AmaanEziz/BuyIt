@@ -1,7 +1,7 @@
 import {React,useRef,useState} from 'react'
 import 'whatwg-fetch'
+import './CSS/registration.css'
 import { useHistory , Link} from "react-router-dom";
-
 export default function Registration() {
 
     const usernameRef=useRef();
@@ -35,24 +35,43 @@ export default function Registration() {
     }
 
     return (
-        
+<body id="body">
+        <div>
+            <div class="container">
 
-     <>
-        <h1>Sign Up</h1>
-        <form onSubmit={handleSubmit}>
-            <div style={{color:"red"}}>{errorMessage}</div>
-            <label htmlFor="newUsername">New Username</label><br/>
-            <input type="text" name="username" id="username" ref={usernameRef}/><br/>
-            <label htmlFor="newPassword">New Password</label><br/>
-                <input type="password" name="password" id="password" ref={passwordRef}/><br/>
-               
-                <button type="submit">Submit</button>
-                <Link to="/login"><button>Login</button></Link>
+<form id="signup">
 
-                
-        </form>
-
-     </>
+    <div class="header">
     
+        <h3>Sign Up</h3>
+        
+        <p>Please fill out this form</p>
+        
+    </div>
+    
+    <div class="sep"></div>
+    <div style={{color:"red"}}>{errorMessage}</div>
+
+    <div class="inputs">
+    
+        <input ref={usernameRef} type="text" name="username" id="username" placeholder="Username" autofocus />
+    
+        <input ref={passwordRef} type="password" name="password" id="password" placeholder="Password" />
+        
+        <div class="checkboxy">
+            <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms of use</label>
+        </div>
+        
+        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP FOR INVITE NOW</button>
+    
+    </div>
+    <Link to="/login"><a>Already have an account? Sign in</a></Link>
+
+</form>
+
+</div>
+​
+        </div>
+        </body>
     )
 }

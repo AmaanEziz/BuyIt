@@ -1,12 +1,11 @@
 import {React,useState,useEffect,useRef} from 'react'
 import {Card,Button} from 'react-bootstrap'
 import { useHistory, Redirect} from "react-router-dom";
-import { Checkmark } from 'react-checkmark'
 import './CSS/homepageCSS.css'
 export default function Homepage() {
+    const searchRef=useRef()
     const [user,setUser]=useState()
     const [inventory,setInventory]=useState([])
-    const [search,setSearch]=useState("");
     const [loaded,setLoaded]=useState(false);
     const UNKNOWN_IMAGE="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdRy7QL9AkV9RHklQFF3kzv3XabkMNbeamnQ&usqp=CAU"
     const history=useHistory();
@@ -20,21 +19,24 @@ export default function Homepage() {
             },
             body: JSON.stringify(data)
           }).then(async (response)=>{
+              if(response.status==200){
               let json=await response.json()
               setInventory(json.inventory)
               setUser(json.user)
+              }
+              else {
+                  setInventory([])
+                  console.log("request failed")
+              }
               setLoaded(true)
-          })
+          }).catch(err=>{console.log(err)})
           
           
           .catch(err=>{<Redirect to="/login"/>})
         
     },[])
     
-    function onChange(e){
-        setSearch(e.target.value);
-        console.log(search);
-    }
+    
     function logOutClick(){
         sessionStorage.removeItem("SID")
         history.push('/login')
@@ -42,7 +44,7 @@ export default function Homepage() {
    async function submitSearch(e){
        e.preventDefault();
         setLoaded(false);
-        let response= await fetch(`http://localhost:3001/results/${search}`).catch(err=>{console.log(err)})
+        let response= await fetch(`http://localhost:3001/results/${searchRef.current.value}`).catch(err=>{console.log(err)})
         let newInventory=await response.json()
         setInventory(newInventory)
         setLoaded(true)
@@ -75,13 +77,13 @@ export default function Homepage() {
           <a href="/shoppingCart" className="btn btn-info float-right">Shopping Cart</a>
 
             <form>
-                <input type="text" placeholder="Search" id="search" name="search" value={search} onChange={onChange}></input>
+                <input type="text" placeholder="Search" id="search" name="search" ref={searchRef}></input>
                 <button onClick={submitSearch}>Submit</button>
             </form>
             <div>
-            {loaded==false ? <div>Loading...</div> :
+            {loaded==false ? <div>Loading Inventory...</div> :
             <>
-            
+            {inventory.length==0 ? <div>No Results Found</div>: <></>}
             {inventory.map(item=>{
                return <Card style={{ width: '18rem', display:"inline-block"}} className="m-2">
                 <a href={"/item/"+item._id}      >

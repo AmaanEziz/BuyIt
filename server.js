@@ -53,8 +53,13 @@ app.post('/login',(req,res)=>{
 
 
 app.post('/homepage',async (req,res)=>{
-    let inventory=await Inventory.find({})
-    let user= await Users.findOne({SID:req.body.SID})
+    let inventory=await Inventory.find({}).catch((err)=>{
+        res.sendStatus(400)
+        return
+    })
+    let user= await Users.findOne({SID:req.body.SID}).catch(err=>{
+        console.log(err)
+    })
     let response={inventory:inventory,user:user}
     res.json(response)
     return 
@@ -138,6 +143,11 @@ Inventory.findByIdAndRemove(req.body.item._id,(err,result)=>{
         res.sendStatus(400)
         return
     }
+    console.log(result)
+    if(result==null){
+        res.sendStatus(400)
+        return
+    }
 }).catch(err=>{
     res.sendStatus(400)
     return
@@ -147,6 +157,7 @@ Users.findOneAndUpdate({SID:req.body.SID},
     {$pull:{shoppingCart:req.body.item}})
     .then(result=>{
         res.sendStatus(200)
+        return
     })
     .catch(err=>{
         res.sendStatus(400)

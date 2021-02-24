@@ -1,11 +1,10 @@
 import {React,useRef,useState} from 'react'
 import 'whatwg-fetch'
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
+import './CSS/registration.css'
 
-import {Link, BrowserRouter as Router} from 'react-router-dom'
 export default function Login() {
-    
-    const [loading,setLoading]=useState();
+    const [loading,setLoading]=useState("")
     const usernameRef=useRef();
     const passwordRef=useRef()
     const [errorMessage,setErrorMessage]=useState("")
@@ -35,23 +34,42 @@ export default function Login() {
           .catch(err=>{setErrorMessage("Username and Password required")
         })
         
-    }
-
+   }
     return (
-       <>
-        <h1>Sign In</h1>
-        <form onSubmit={handleSubmit}>
-            <div style={{color:"red"}}>{errorMessage}</div>
-            <label htmlFor="username">Username</label><br/>
-            <input type="text" name="username" id="username" ref={usernameRef}/><br/>
-            <label htmlFor="password">Password</label><br/>
-                <input type="password" name="password" id="password" ref={passwordRef}/><br/>
-               
-                <button type="submit">Submit</button>
-                <Link to="/registration"><button>Register</button></Link>
-        </form>
-        <div>{loading}</div>
-        </>
+    <body id="body">
+        <div>
+            <div class="container">
+
+<form id="signup">
+
+    <div class="header">
+    
+        <h3>Sign In</h3>
+        
+        
+    </div>
+    
+    <div class="sep"></div>
+    <div style={{color:"red"}}>{errorMessage}</div>
+
+    <div class="inputs">
+    
+        <input ref={usernameRef} type="text" name="username" id="username" placeholder="Username" autofocus />
+    
+        <input ref={passwordRef} type="password" name="password" id="password" placeholder="Password" />
+        
+        
+        
+        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP FOR INVITE NOW</button>
+    
+    </div>
+    <Link to="/registration"><a>Don't have an account? Sign Up</a></Link>
+
+</form>
+
+</div>
+​<div>{loading}</div>
+        </div>
+    </body>
     )
 }
-
