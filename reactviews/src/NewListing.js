@@ -1,5 +1,6 @@
 import {React,useState,useRef} from 'react'
 import { useHistory } from "react-router-dom";
+import NavBar from './NavBar.js'
 
 export default function NewListing() {
     const [errorMessage,setErrorMessage]=useState("");
@@ -48,15 +49,16 @@ export default function NewListing() {
     
     return (
         <div>
+            <NavBar/>
             <div style={{color:"red"}}>{errorMessage}</div>
             <form>
-                <label for="name">Name:</label><br/>
+                <label htmlFor="name">Name:</label><br/>
                 <input type="text" ref={nameRef}/><br/>
-                <label for="cost">Cost:</label><br/>
+                <label htmlFor="cost">Cost:</label><br/>
                 <input type="text" ref={costRef}/><br/>
-                <label for="photoURL">photoURL</label><br/>
+                <label htmlFor="photoURL">photoURL</label><br/>
                 <input type="text" ref={photoURLRef}/><br/>
-                <label for="description">Description</label>
+                <label htmlFor="description">Description</label>
                 <textarea onChange={(e)=>{
                     setDescription(e.target.value)
                 }}>{Description}</textarea>

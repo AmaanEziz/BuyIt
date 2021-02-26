@@ -58,11 +58,8 @@ export default function Registration() {
     
         <input ref={passwordRef} type="password" name="password" id="password" placeholder="Password" />
         
-        <div class="checkboxy">
-            <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms of use</label>
-        </div>
         
-        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP FOR INVITE NOW</button>
+        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP</button>
     
     </div>
     <Link to="/login"><a>Already have an account? Sign in</a></Link>

@@ -7,12 +7,14 @@ import Homepage from './Homepage.js'
 import NewListing from './NewListing.js'
 import Item from './Item.js'
 import ShoppingCart from './ShoppingCart.js'
+import NavBar from './NavBar.js'
 function App() {
   return (
-    
+
     <Router>
      
       <Switch>
+
     <Route path="/registration" component={withRouter(Registration)}/>
     <Route path="/login"  component={withRouter(Login)}/>
     <Route path="/homepage" component={withRouter(Homepage)}/>

@@ -86,37 +86,70 @@ app.get('/results/:search',(req,res)=>{
 
 
 app.post('/newListing',async (req,res)=>{
-    let user= await Users.findOne({SID:req.body.SID})
-    console.log(user.username)
-    let newInventory= new Inventory({
-        name:req.body.name,
-        cost:req.body.cost,
-        photoURL:req.body.photoURL,
-        seller: user.username,
-        description:req.body.summary
-    })
-
-  await newInventory.save().then(async (item)=>{
-       await Users.findOneAndUpdate({SID:req.body.SID},
-       {$push:{selling:item}},{new:true})
-        .catch(err=>{ return res.sendStatus(400)
+    let newInventory={}
+   await Users.findOne({SID:req.body.SID}).then(async (user)=>{
+        newInventory= new Inventory({
+            name:req.body.name,
+            cost:req.body.cost,
+            photoURL:req.body.photoURL,
+            seller: user.username,
+            description:req.body.summary
         })
-        return res.sendStatus(200)
-    }).catch(error=>{
-        return res.sendStatus(400)
+
+        await newInventory.save().then(async (item)=>{
+            await Users.findOneAndUpdate({SID:req.body.SID},
+            {$push:{selling:item}},{new:true})
+             .catch(err=>{ return res.sendStatus(400)
+             })
+             return res.sendStatus(200)
+         }).catch(error=>{
+             return res.sendStatus(400)
+         })
     })
+    
+
+
     
 })
 
-app.get("/item/:id",(async (req,res)=>{
+
+
+app.post("/item/:id",(async (req,res)=>{
 let item=await Inventory.findById(req.params.id).catch(err=>{return res.sendStatus(400)})
-return res.sendStatus(200).json()
+let user= await Users.findOne({SID:req.body.SID})
+item._id=String(item._id)
+res.json({item:item,user:user})
+    return
 }))
+
+app.post("/deleteItem/:id",(async (req,res)=>{
+    Inventory.findByIdAndRemove(req.params.id).then(async item=>{
+        console.log(item)
+        await Users.findOneAndUpdate({SID:req.body.SID},
+            {$pull:{selling:item}},{new:true}).then(user=>{
+                console.log(user)
+            })
+            
+            .catch(()=>{
+                res.sendStatus(400)
+                return
+            })
+    }).catch(()=>{
+        res.sendStatus(400)
+        return
+    })
+
+
+
+}))
+
+
+
 
 app.post('/shoppingCart',async (req,res)=>{
   await Users.findOne({SID:req.body.SID}).then(user=>{
     res.json(user.shoppingCart)
-    console.log(user.shoppingCart)
+    
     return
 
   })
@@ -127,7 +160,6 @@ app.post('/shoppingCart',async (req,res)=>{
 app.post('/deleteFromCart',(req,res)=>{
     Users.findOneAndUpdate({SID:req.body.SID},
         {$pull:{shoppingCart:req.body.item}},{new:true}).then(changedUser=>{    
-            console.log(changedUser)
             res.sendStatus(200)
             return
 
@@ -137,32 +169,38 @@ app.post('/deleteFromCart',(req,res)=>{
         })
 })
 
-app.post('/buyNow',(req,res)=>{
-Inventory.findByIdAndRemove(req.body.item._id,(err,result)=>{
-    if(err){
-        res.sendStatus(400)
-        return
+app.post('/buyNow', async (req,res)=>{
+let unavailable=[]
+
+for (const cartItem of req.body.shoppingCart){
+await Inventory.findByIdAndRemove(cartItem._id,async (err,result)=>{
+    if(err|| !result ){ 
+        unavailable.push(cartItem)
     }
-    console.log(result)
-    if(result==null){
-        res.sendStatus(400)
-        return
-    }
-}).catch(err=>{
-    res.sendStatus(400)
-    return
+    
+})
+.catch(err=>{  
+    console.log(err)
 })
 
-Users.findOneAndUpdate({SID:req.body.SID},
-    {$pull:{shoppingCart:req.body.item}})
-    .then(result=>{
-        res.sendStatus(200)
-        return
-    })
-    .catch(err=>{
-        res.sendStatus(400)
-        return
-    })
+await Users.findOneAndUpdate({SID:req.body.SID},
+    {$pull:{shoppingCart:cartItem}})
+    .catch(err=>{console.log(err)})
+
+let cartitem=cartItem
+cartitem._id= mongoose.Types.ObjectId(cartItem._id)
+    await Users.findOneAndUpdate({username:cartitem.seller},
+        {$pull:{selling:cartItem}},{new:true}).then(user=>{
+            console.log(user)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+}
+
+    res.json(unavailable)
+    return
+
 
 })
 

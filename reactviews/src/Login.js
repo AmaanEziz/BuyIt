@@ -60,7 +60,7 @@ export default function Login() {
         
         
         
-        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP FOR INVITE NOW</button>
+        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN IN</button>
     
     </div>
     <Link to="/registration"><a>Don't have an account? Sign Up</a></Link>

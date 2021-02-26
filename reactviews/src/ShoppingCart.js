@@ -1,10 +1,13 @@
 import {React,useState,useEffect} from 'react'
 import {Button} from 'react-bootstrap'
+import NavBar from './NavBar.js'
+
 export default function ShoppingCart() {
+    
     const [cart,setCart]=useState()
     const [loaded,setLoaded]=useState(false)
-    const [unavailableList,setUnavailableList]=useState([])
     const [errorMessage,setErrorMessage]=useState("")
+    const [successMessage,setSuccessMessage]=useState("")
     useEffect(async ()=>{
         let data={SID:sessionStorage.getItem("SID")}
         let response= await fetch('http://localhost:3001/shoppingCart', {
@@ -41,32 +44,42 @@ export default function ShoppingCart() {
     }
     
     async function onBuy(){
-        cart.map(async (item)=>{
-            let data={item:item,SID:sessionStorage.getItem("SID")}
-            let response= await fetch('http://localhost:3001/buyNow', {
-            method: 'POST', 
-            headers: {
-                              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          }).catch()
-          if (response.status==400){
-              setUnavailableList(prev=>[...prev,item])
-          }
-        })
-        if (unavailableList.length>0){
-            setErrorMessage("The following items can't be purchased because the seller(s) have removed them or because they've already been bought "+unavailableList)
-        }
-        else {
-            setCart([])
-            console.log("All items successfull bought")
-        }
+        let data={shoppingCart:cart,SID:sessionStorage.getItem("SID")}
+        let response= await fetch('http://localhost:3001/buyNow', {
+        method: 'POST', 
+        headers: {
+                          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).catch(err=>{
+    
+        console.log("the error was"+err)
+      })
+    let unavailableObjects=await response.json()
+    let unavailableNames=[]
+    unavailableObjects.map(object=>{
+        unavailableNames.push(object.name)
+    })
+    if (unavailableNames.length>0){
+        setErrorMessage("The following items were out of stock and couldn't be purchased.=> "+unavailableNames)
+       
+    }
+    else{
+        setSuccessMessage("Items all successfully purchased")
+    }
+    setCart([])
     }
     return (
         <div>
+            <NavBar/>
+            <div style={{color:"red"}}>{errorMessage}</div>
+            <div>{successMessage}</div>
             {!loaded ? <div>Loading</div> :
             <div>
-                {cart.length==0 ?  <div>Cart is Empty</div> :
+                {cart.length==0 ?  
+                <>
+                <div>Cart is Empty</div> 
+                </>:
                 <>
                 
                 {cart.map(item=>{
@@ -79,7 +92,7 @@ export default function ShoppingCart() {
                 })}
                 <br/>
                 <Button onClick={onBuy}>Buy Now</Button>
-                <div>{errorMessage}</div>
+                
                 </>
             }
             

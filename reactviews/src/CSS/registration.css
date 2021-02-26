@@ -3,12 +3,15 @@
     font-family: "Helvetica Neue", Helvetica, Arial;
     padding-top: 20px;
     min-height:100vh
+    
 }
 
 .container {
     width: 406px;
     max-width: 406px;
     margin: 0 auto;
+    position:relative;
+    top:20vh;
 }
 
 #signup {
@@ -32,7 +35,8 @@
     color: #333333;
     font-size: 40px;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 3vh;
+    margin-top:3vh;
 }
 
 #signup .header p {

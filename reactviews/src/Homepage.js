@@ -1,6 +1,7 @@
 import {React,useState,useEffect,useRef} from 'react'
 import {Card,Button} from 'react-bootstrap'
 import { useHistory, Redirect} from "react-router-dom";
+import NavBar from './NavBar.js'
 import './CSS/homepageCSS.css'
 export default function Homepage() {
     const searchRef=useRef()
@@ -68,8 +69,9 @@ export default function Homepage() {
         e.target.disabled=true
         }
     return (
-       
+    
         <div>
+            <NavBar/>
              {sessionStorage.getItem("SID") ? <></> : <Redirect to="login"/>}   
         <button onClick={logOutClick} className="btn btn-danger">LogOut</button>
           <h1 className="float-left">BuyIt</h1>

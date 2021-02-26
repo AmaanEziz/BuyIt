@@ -1,0 +1,11 @@
+.navbar-item{
+    color:gray;
+    margin-left:2vw;
+}
+.navbar-item:hover{
+    color:white;
+    text-decoration: none;
+}
+.active{
+    color:white
+}
