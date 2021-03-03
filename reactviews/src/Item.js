@@ -1,6 +1,6 @@
 import {React,useState,useEffect} from 'react'
 
-import {useHistory} from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 import NavBar from './NavBar.js'
 export default function Item(props) {
     const SID=sessionStorage.getItem("SID")
@@ -47,10 +47,10 @@ export default function Item(props) {
             <>
             {!item ? <div>Item no longer exists</div> :
             <>
-        
+            <Link to={`/item/item._id`}>
                 <img src={item.photoURL} style={{maxHeight:"60vh"}}
               onError={(e)=>{e.target.src=UNKNOWN_IMAGE}}/>
-           
+           </Link>
             <div>{item.name}</div>
             
             <div>$ {item.cost}</div>

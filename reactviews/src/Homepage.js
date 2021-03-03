@@ -69,12 +69,22 @@ export default function Homepage() {
         <div>
             <NavBar />
              {sessionStorage.getItem("SID") ? <></> : <Redirect to="login"/>}   
-          <h1 className="float-left">BuyIt</h1>
           
-            <form>
-                <input type="text" placeholder="Search" id="search" name="search" ref={searchRef}></input>
-                <button onClick={submitSearch}>Submit</button>
-            </form>
+          
+            
+<div id="search">
+<form action="">
+  <input type="search"/>
+  <i class="fa fa-search"></i>
+</form>
+</div>
+
+
+
+
+
+
+
             <div>
             {loaded==false ? <div>Loading Inventory...</div> :
             <>
