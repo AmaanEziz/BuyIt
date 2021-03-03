@@ -42,7 +42,7 @@ app.post('/login',(req,res)=>{
         let validPassword= await bcrypt.compare(req.body.password,result.password)
         let user= await Users.findOneAndUpdate({username:req.body.username},{SID:uuidv4()},{new:true})
         .catch(err=>{return res.sendStatus(400)})
-        return res.status(200).json({SID:user.SID})
+        return res.status(200).json(user)
     }
     else {
         return res.sendStatus(400)
@@ -148,7 +148,7 @@ app.post("/deleteItem/:id",(async (req,res)=>{
 
 app.post('/shoppingCart',async (req,res)=>{
   await Users.findOne({SID:req.body.SID}).then(user=>{
-    res.json(user.shoppingCart)
+    res.json(user)
     
     return
 
@@ -173,9 +173,12 @@ app.post('/buyNow', async (req,res)=>{
 let unavailable=[]
 
 for (const cartItem of req.body.shoppingCart){
-await Inventory.findByIdAndRemove(cartItem._id,async (err,result)=>{
+await Inventory.findById(cartItem._id,async (err,result)=>{
     if(err|| !result ){ 
         unavailable.push(cartItem)
+        await Users.findOneAndUpdate({SID:req.body.SID},
+            {$pull:{shoppingCart:cartItem}})
+            .catch(err=>{console.log(err)})
     }
     
 })
@@ -183,27 +186,47 @@ await Inventory.findByIdAndRemove(cartItem._id,async (err,result)=>{
     console.log(err)
 })
 
-await Users.findOneAndUpdate({SID:req.body.SID},
-    {$pull:{shoppingCart:cartItem}})
-    .catch(err=>{console.log(err)})
 
-let cartitem=cartItem
-cartitem._id= mongoose.Types.ObjectId(cartItem._id)
-    await Users.findOneAndUpdate({username:cartitem.seller},
-        {$pull:{selling:cartItem}},{new:true}).then(user=>{
-            console.log(user)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
 }
-
-    res.json(unavailable)
-    return
-
-
+res.json(unavailable)
 })
 
+
+
+app.post('/approveBuyNow', async (req,res)=>{
+    let unavailable=[]
+    
+    for (const cartItem of req.body.shoppingCart){
+    await Inventory.findById(cartItem._id,async (err,result)=>{
+        if(err|| !result ){ 
+            unavailable.push(cartItem)
+        }
+        
+    })
+    .catch(err=>{  
+        console.log(err)
+    })
+    
+    await Users.findOneAndUpdate({SID:req.body.SID},
+        {$pull:{shoppingCart:cartItem}})
+        .catch(err=>{console.log(err)})
+    
+    let cartitem=cartItem
+    cartitem._id= mongoose.Types.ObjectId(cartItem._id)
+        await Users.findOneAndUpdate({username:cartitem.seller},
+            {$pull:{selling:cartItem}},{new:true}).then(user=>{
+                console.log(user)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+    }
+    
+        res.json(unavailable)
+        return
+    
+    
+    })
 async function deleteAll(){
 await Users.deleteMany({})
 await Inventory.deleteMany({})

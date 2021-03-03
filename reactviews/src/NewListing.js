@@ -53,9 +53,9 @@ export default function NewListing() {
             <div style={{color:"red"}}>{errorMessage}</div>
             <form>
                 <label htmlFor="name">Name:</label><br/>
-                <input type="text" ref={nameRef}/><br/>
+                <input type="text" ref={nameRef} maxlength="17" /><br/>
                 <label htmlFor="cost">Cost:</label><br/>
-                <input type="text" ref={costRef}/><br/>
+                <input type="text" ref={costRef} maxlength="10"/><br/>
                 <label htmlFor="photoURL">photoURL</label><br/>
                 <input type="text" ref={photoURLRef}/><br/>
                 <label htmlFor="description">Description</label>

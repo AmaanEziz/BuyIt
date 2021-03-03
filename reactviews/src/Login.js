@@ -2,7 +2,6 @@ import {React,useRef,useState} from 'react'
 import 'whatwg-fetch'
 import { useHistory,Link } from "react-router-dom";
 import './CSS/registration.css'
-
 export default function Login() {
     const [loading,setLoading]=useState("")
     const usernameRef=useRef();
@@ -24,7 +23,8 @@ export default function Login() {
                 let responseJSON=await response.json()
                 sessionStorage.setItem("SID",responseJSON.SID)
                 history.push('/homepage')
-                 
+                
+                
                   
             }
             else{
@@ -48,7 +48,6 @@ export default function Login() {
         
         
     </div>
-    
     <div class="sep"></div>
     <div style={{color:"red"}}>{errorMessage}</div>
 
