@@ -15,3 +15,6 @@
     margin-top:2vh;
     margin-bottom:2vh;
 }
+.dropdownItem{
+    text-decoration-line: none;
+}

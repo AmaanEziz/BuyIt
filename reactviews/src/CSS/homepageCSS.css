@@ -3,15 +3,18 @@
     height: 20vw;
     object-fit:fill
 }
-body {
+#body {
     padding: 0;
     margin: 0;
     height: 100vh;
     width: 100%;
     background:lightgray;
 }
+#name{
+    font-weight:700;
+}
 
-form{
+#form{
     position: relative;
     top:8vh;
     left: 50%;
@@ -26,7 +29,7 @@ form{
     padding: 5px;
 }
 
-input{
+#input{
     position: absolute;
     top: 0;
     left: 0;
@@ -56,16 +59,17 @@ input{
     transition: all 1s;
 }
 
-form:hover{
+#form:hover{
     width: 200px;
     cursor: pointer;
 }
 
-form:hover input{
+#form:hover #input{
     display: block;
 }
 
-form:hover .fa{
+#form:hover .fa{
     background: #07051a;
     color: white;
 }
+

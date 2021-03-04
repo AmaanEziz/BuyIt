@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar,Nav,NavDropdown} from 'react-bootstrap'
+import {Navbar,Nav,NavDropdown,Dropdown} from 'react-bootstrap'
 import { Link} from 'react-router-dom'
 import './CSS/navbarStyles.css'
 export default function NavBar({username}) {
@@ -18,11 +18,12 @@ async function logOut(){
 	      Homepage
           </Link>
           <NavDropdown title="My Account" id="basic-nav-dropdown" style={{minWidth:"12vw",maxWidth:"15vw"}}>
-          <Link to="/myProfile">My Profile</Link><br/>
-          <Link to="/shoppingCart">Shopping Cart</Link><br/>
-          <Link to="/newListing">Create New Listing</Link><br/>
+          <Dropdown.Item as={Link} to="/myProfile">My Profile</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/shoppingCart">Shopping Cart</Dropdown.Item>
+
+          <Dropdown.Item as={Link} to="/newListing">Create New Listing</Dropdown.Item>
          <NavDropdown.Divider />
-        <Link to="/login"><div className="dropItem">Logout</div></Link>
+         <Dropdown.Item as={Link} to="/login" onClick={logOut}>Logout</Dropdown.Item>
       </NavDropdown>
           </Nav>
         </Navbar.Collapse>

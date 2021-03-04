@@ -48,8 +48,11 @@ export default function NewListing() {
       
     
     return (
-        <div>
+        <div style={{height:"100vh",textAlign:"center",backgroundColor:"lightgray"}}>
             <NavBar/>
+            <br/><br/>
+            <div style={{margin:"auto",width:"20%"}}>
+            <h1 style={{textAlign:"center"}}>Create New Listing</h1>
             <div style={{color:"red"}}>{errorMessage}</div>
             <form>
                 <label htmlFor="name">Name:</label><br/>
@@ -58,14 +61,14 @@ export default function NewListing() {
                 <input type="text" ref={costRef} maxlength="10"/><br/>
                 <label htmlFor="photoURL">photoURL</label><br/>
                 <input type="text" ref={photoURLRef}/><br/>
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">Description</label><br/>
                 <textarea onChange={(e)=>{
                     setDescription(e.target.value)
-                }}>{Description}</textarea>
+                }}>{Description}</textarea><br/>
                 <button onClick={onSubmit}>Submit</button>
             </form>
         </div>
+        </div>
     )
     }
-    //on homepage request. send the information of the user as well and, if the user's shopping cart includes an item,
-//make that item have the button "Added to cart checkmark" instead of "Add to cart"
+    

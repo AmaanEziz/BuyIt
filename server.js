@@ -227,8 +227,5 @@ app.post('/approveBuyNow', async (req,res)=>{
     
     
     })
-async function deleteAll(){
-await Users.deleteMany({})
-await Inventory.deleteMany({})
-}
+
 
