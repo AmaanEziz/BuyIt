@@ -99,10 +99,13 @@ export default function Homepage() {
                 
                 <img width="150" height="100"
                 style={{float:"left",paddingLeft:"2vw"}} src={item.photoURL} 
-                onError={(e)=>{ e.target.src=UNKNOWN_IMAGE}}>
-                </img>
+                onError={(e)=>{ e.target.src=UNKNOWN_IMAGE}}/>
+                
             <div style={{position:"relative",left:"2vw"}}>
+                <Link to={`/item/${item._id}`}>
+                
                 <div id="name">{item.name}</div>
+                </Link>
                 <div>$ {item.cost}</div>
                 
             {!user.shoppingCart.some(e => e._id == item._id) ?  

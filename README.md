@@ -17,6 +17,9 @@ Search Bar:
 Create New Listing:
 <img src="./Photos/CreateNewListing.PNG">
 <br/><br/><br/>
+Item:
+<img src="./Photos/Item.PNG">
+<br/><br/><br/>
 NavBar:
 <img src="./Photos/DropdownBar.PNG">
 <br/><br/><br/>

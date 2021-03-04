@@ -40,9 +40,10 @@ export default function Item(props) {
     console.log(response.status)
     }
     return (
-        <div>
+        <div style={{backgroundColor:"lightgray",width:"100vw",height:"100vh"}}>
             <NavBar/>
-            <button onClick={()=>{history.goBack()}}> Back to homepage</button><br/>
+            <br/><br/><br/><br/><br/><br/>
+            <div style={{margin:"auto",width:"20%",textAlign:"center"}}>
             { !loaded ? <div>Loading ...</div> : 
             <>
             {!item ? <div>Item no longer exists</div> :
@@ -64,6 +65,7 @@ export default function Item(props) {
             
         }
         
+        </div>
         </div>
     )
 }
