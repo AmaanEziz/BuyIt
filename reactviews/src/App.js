@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter as Router, Route, Switch,Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import {withRouter} from 'react-router';
 import Registration from './Registration.js';
 import Login from './Login.js'
@@ -7,7 +7,6 @@ import Homepage from './Homepage.js'
 import NewListing from './NewListing.js'
 import Item from './Item.js'
 import ShoppingCart from './ShoppingCart.js'
-import NavBar from './NavBar.js'
 function App() {
   return (
 
@@ -23,7 +22,7 @@ function App() {
     <Route path="/shoppingCart" component={ShoppingCart}/>
     <Route exact path="/" > 
     
-    {sessionStorage.getItem("SID") ? <Redirect to="/homepage"/> : <Redirect to="/login"/>}
+                  {sessionStorage.getItem("SID") ? <Redirect to="/homepage"/> : <Redirect to="/login" />}
     </Route>
     <Route path="*" component={()=>{return <div>Page Unvailable</div>}} status={404}/>
     </Switch>

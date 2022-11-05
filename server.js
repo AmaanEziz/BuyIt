@@ -7,13 +7,16 @@ const Inventory=require('./Models/Inventory.js')
 const mongoose=require('mongoose')
 const cors=require('cors')
 const { v4: uuidv4 } = require('uuid');
-app.listen(3001)
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+    console.log("listening on port "+port);
+});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors())
 app.set('view engine','ejs')
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/BuyIt', {
+mongoose.connect('mongodb+srv://amaaneziz:Amaan123!!@cluster0.c0obkl3.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
 })
 mongoose.set('useFindAndModify', false);
