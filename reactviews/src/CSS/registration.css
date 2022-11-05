@@ -6,7 +6,7 @@
     
 }
 
-.container {
+#registration, #login{
     width: 406px;
     max-width: 406px;
     margin: 0 auto;

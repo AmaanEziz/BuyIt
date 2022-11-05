@@ -39,7 +39,7 @@ export default function Login() {
     return (
     <body id="body">
         <div>
-            <div class="container">
+            <div class="login">
 
 <form id="signup">
 

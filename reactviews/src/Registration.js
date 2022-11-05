@@ -37,7 +37,7 @@ export default function Registration() {
     return (
 <body id="body">
         <div>
-            <div class="container">
+            <div class="container" id="registration">
 
 <form id="signup">
 
