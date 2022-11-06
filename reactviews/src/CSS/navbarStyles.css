@@ -15,6 +15,21 @@
     margin-top:2vh;
     margin-bottom:2vh;
 }
-.dropdownItem{
+
+.navbar{
+    padding-right:15px;
+}
+
+.navbar-brand{
+    padding-left:15px
+}
+.dropdown-item{
     text-decoration-line: none;
+    color:white;
+    width:auto !important;
+    margin:7.5px;
+}
+
+.dropdown-item:hover{
+    color:white;
 }
