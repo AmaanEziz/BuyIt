@@ -80,9 +80,9 @@ export default function Homepage() {
                 </div>
 
                 <div>
-                    {loaded == false ? <div>Loading Inventory...</div> :
+                    {loaded == false ? <div><br/>Loading Inventory...</div> :
                         <>
-                            {inventory.length == 0 ? <div>No Results Found</div> : <></>}
+                            {inventory.length == 0 ? <div><br/>No Results Found</div> : <></>}
                             <br></br>
                             <br></br>
                             {inventory.map(item => {
