@@ -1,0 +1,16 @@
+#root {
+    background-color:lightgray;
+    text-align:center;
+    height:100vh;
+    overflow-y:auto;
+}
+.form.container {
+    height: 100vh;
+    align-items: center;
+    display:flex;
+}
+.row {
+    justify-content:center;
+    text-align:center;
+    width:100%;
+}

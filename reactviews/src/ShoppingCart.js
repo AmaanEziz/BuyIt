@@ -40,7 +40,7 @@ export default function ShoppingCart() {
           }).catch()
 
           if (response.status==200){
-            console.log("successfullly deleted")
+            console.log("successfully deleted")
             console.log(cart)
             setCart(cart.filter(cartItem=>{return cartItem!==item}))
         }
@@ -53,7 +53,7 @@ export default function ShoppingCart() {
 
   
     return (
-        <div style={{height:"100vh",backgroundColor:"lightgray",backgroundRepeat:'repeat'}}>
+        <body style={{height:"100vh",backgroundColor:"lightgray",backgroundRepeat:'repeat'}}>
             <NavBar/>
             
             <div style={{color:"red"}}>{errorMessage}</div>
@@ -114,6 +114,6 @@ export default function ShoppingCart() {
             
             </div>
 }
-        </div>
+        </body>
     )
 }

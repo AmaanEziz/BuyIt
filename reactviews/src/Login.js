@@ -37,24 +37,23 @@ export default function Login() {
         
    }
     return (
-    <body id="body">
-        <div>
-            <div class="login">
+        <div className="container form">
+            <div class="row">
 
-<form id="signup">
+<form className="createForm col-11 col-md-6 col-lg-4">
 
-    <div class="header">
+    <div className="header">
     
         <h3>Sign In</h3>
         
         
     </div>
-    <div class="sep"></div>
+    <div className="sep"></div>
     <div style={{color:"red"}}>{errorMessage}</div>
 
-    <div class="inputs">
+    <div className="inputs">
     
-        <input ref={usernameRef} type="text" name="username" id="username" placeholder="Username" autofocus />
+        <input ref={usernameRef} type="text" name="username" id="username" placeholder="Username" autoFocus />
     
         <input ref={passwordRef} type="password" name="password" id="password" placeholder="Password" />
         
@@ -68,8 +67,8 @@ export default function Login() {
 </form>
 
 </div>
-​<div>{loading}</div>
-        </div>
-    </body>
+                <div>{loading}</div>
+                </div>
+
     )
 }

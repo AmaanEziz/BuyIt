@@ -37,13 +37,13 @@ export default function Item(props) {
             },
             body: JSON.stringify(data)
           })
-    console.log(response.status)
+            history.replace("/homepage")
     }
     return (
-        <div style={{backgroundColor:"lightgray",width:"100vw",height:"100vh"}}>
+        <>
             <NavBar/>
             <br/><br/><br/><br/><br/><br/>
-            <div style={{margin:"auto",width:"20%",textAlign:"center"}}>
+            <div>
             { !loaded ? <div>Loading ...</div> : 
             <>
             {!item ? <div>Item no longer exists</div> :
@@ -65,7 +65,7 @@ export default function Item(props) {
             
         }
         
-        </div>
-        </div>
+            </div>
+            </>
     )
 }

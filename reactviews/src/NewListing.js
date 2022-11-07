@@ -1,6 +1,7 @@
 import {React,useState,useRef} from 'react'
 import { useHistory } from "react-router-dom";
 import NavBar from './NavBar.js'
+import './CSS/registration.css'
 
 export default function NewListing() {
     const [errorMessage,setErrorMessage]=useState("");
@@ -37,38 +38,52 @@ export default function NewListing() {
                 history.push('/homepage')
             
             }
-            else{ setErrorMessage("Please fill in Name and Cost fields")
+            else{ setErrorMessage("Please fill in the name and cost fields with valid input.")
              console.log("error occured") }
                 
             
           }).catch(err=>{
-              setErrorMessage("Please fill in Name and Cost fields")
+              setErrorMessage("An unknown error occured. Please try again later.")
         console.log(err)})
         }
       
     
     return (
-        <div style={{height:"100vh",textAlign:"center",backgroundColor:"lightgray"}}>
+        <>
             <NavBar/>
             <br/><br/>
-            <div style={{margin:"auto",width:"20%"}}>
-            <h1 style={{textAlign:"center"}}>Create New Listing</h1>
-            <div style={{color:"red"}}>{errorMessage}</div>
-            <form>
-                <label htmlFor="name">Name:</label><br/>
-                <input type="text" ref={nameRef} maxlength="17" /><br/>
-                <label htmlFor="cost">Cost:</label><br/>
-                <input type="text" ref={costRef} maxlength="10"/><br/>
-                <label htmlFor="photoURL">photoURL</label><br/>
-                <input type="text" ref={photoURLRef}/><br/>
-                <label htmlFor="description">Description</label><br/>
-                <textarea onChange={(e)=>{
-                    setDescription(e.target.value)
-                }}>{Description}</textarea><br/>
-                <button onClick={onSubmit}>Submit</button>
-            </form>
-        </div>
-        </div>
+            <div>
+                <div style={{ color: "red" }}>{errorMessage}</div>
+                <div className="container form">
+                    <div class="row">
+                        <form className="createForm col-11 col-md-6 col-lg-4">
+
+                        <div className="header">
+                            <h3>Create New Listing</h3>
+                        </div>
+                        <div style={{ color: "red" }}>{errorMessage}</div>
+
+                        <div className="inputs">
+                            <label htmlFor="name">Name:</label>
+                            <input type="text" ref={nameRef} maxLength="17" />
+                            <label htmlFor="cost">Cost:</label>
+                            <input type="text" ref={costRef} maxLength="10" />
+                            <label htmlFor="photoURL">photoURL</label>
+                            <input type="text" ref={photoURLRef} />
+                            <label htmlFor="description">Description</label>
+                            <textarea maxLength="200" onChange={(e) => {
+                                setDescription(e.target.value)
+                            }} value={Description}></textarea><br />
+                            <button id="submit" href="#" onClick={onSubmit}>Submit</button>
+
+                        </div>
+
+                    </form>
+
+                    </div>
+                    </div>
+            </div>
+            </>
     )
     }
     

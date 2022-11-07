@@ -64,18 +64,18 @@ export default function Homepage() {
         e.target.disabled = true
     }
     return (
-        <body id="body">
-                <NavBar />
-                {sessionStorage.getItem("SID") ? <></> : <Redirect to="login" />}
+        <>
+            <NavBar />
+            {sessionStorage.getItem("SID") ? <></> : <Redirect to="login" />}
 
 
-            <div class="container">
+            <div className="container">
                 <br/>
-                <div class="row">
-                <div id="search" class="col-sm-12 col-md-4 col-lg-2">
+                <div className="row">
+                <div id="search" className="col-sm-12 col-md-4 col-lg-2">
                     <form id="form" onSubmit={submitSearch}>
                         <input id="input" type="search" ref={searchRef} />
-                        <i class="fa fa-search" onClick={submitSearch}></i>
+                        <i className="fa fa-search" onClick={submitSearch}></i>
                     </form>
                 </div>
 
@@ -119,7 +119,7 @@ export default function Homepage() {
 
             </div>
                 </div>
-                </div>
-        </body>
+            </div>
+            </>
     )
 }

@@ -35,40 +35,37 @@ export default function Registration() {
     }
 
     return (
-<body id="body">
-        <div>
-            <div class="container" id="registration">
+        <>
+            <div className="container form">
+                <div class="row">
+                    <form class="createForm col-11 col-md-6 col-lg-4">
 
-<form id="signup">
-
-    <div class="header">
+                    <div className="header">
     
-        <h3>Sign Up</h3>
+                        <h3>Sign Up</h3>
         
-        <p>Please fill out this form</p>
+                        <p>Please fill out this form</p>
         
-    </div>
+                    </div>
     
-    <div class="sep"></div>
-    <div style={{color:"red"}}>{errorMessage}</div>
+                    <div className="sep"></div>
+                    <div style={{color:"red"}}>{errorMessage}</div>
 
-    <div class="inputs">
+                    <div className="inputs">
     
-        <input ref={usernameRef} type="text" name="username" id="username" placeholder="Username" autofocus />
+                        <input ref={usernameRef} type="text" name="username" id="username" placeholder="Username" autoFocus />
     
-        <input ref={passwordRef} type="password" name="password" id="password" placeholder="Password" />
+                        <input ref={passwordRef} type="password" name="password" id="password" placeholder="Password" />
         
         
-        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP</button>
+                        <button id="submit" href="#" onClick={(e)=>{handleSubmit(e)}}>SIGN UP</button>
     
-    </div>
-    <Link to="/login"><a>Already have an account? Sign in</a></Link>
+                    </div>
+                    <Link to="/login"><a>Already have an account? Sign in</a></Link>
 
-</form>
-
-</div>
-​
-        </div>
-        </body>
+                    </form>
+                    </div>
+            </div>
+        </>
     )
 }
