@@ -5,9 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd reactviews && npm run build",
-    "install-client": "cd reactviews && npm install",
+    "install-client": "cd reactviews && npm ci",
     "heroku-postbuild": "npm run install-client && npm run build",
-    "start": "node server.js && cd reactviews && npm start",
+    "start": "npm ci && node server.js && cd reactviews && npm start",
     "client": "cd reactviews && npm start"
   },
   "keywords": [],
