@@ -14,6 +14,9 @@ app.listen(port, () => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors())
+if (process.env.NODE_ENV == "production") {
+    app.use(express.static("./reactviews"))
+}
 app.set('view engine','ejs')
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb+srv://amaaneziz:Amaan123!!@cluster0.c0obkl3.mongodb.net/?retryWrites=true&w=majority', {

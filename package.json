@@ -3,7 +3,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd reactviews && npm run build",
+    "install-client": "cd reactviews && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "node server.js && cd reactviews && npm start",
+    "client": "cd reactviews && npm start"
   },
   "keywords": [],
   "author": "",
